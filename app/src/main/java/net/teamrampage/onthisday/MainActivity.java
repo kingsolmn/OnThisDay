@@ -1,9 +1,11 @@
 package net.teamrampage.onthisday;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +23,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     private static final String TAG = "OnThisDay";
     private static String provider;
     private static String month;
@@ -36,11 +38,18 @@ public class MainActivity extends ActionBarActivity {
     private static Calendar cal;
     private static DatePickerDialog datePicker;
     private static DatePickerDialog.OnDateSetListener dtPickListener;
+    private static LinearLayout lLayout;
+    private static FragmentActivity faActivity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                Bundle savedInstanceState) {
+        faActivity = (FragmentActivity) super.getActivity();
+        lLayout = (LinearLayout) inflater.inflate(R.activity_main, container, false);
+
+        return lLayout;
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
     }
 
     @Override
