@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="date">Date</string>
     <string name="look_up">Look Up</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

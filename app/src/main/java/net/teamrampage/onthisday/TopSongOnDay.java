@@ -50,7 +50,7 @@ public class TopSongOnDay extends AsyncTask<String, Void, String>{
 
     protected void onPostExecute(String result){
         Log.i(TAG, "Done, sending info back to the Main Activity");
-        MainActivity.songOnDayRes(result);
+        MainFragment.songOnDayRes(result);
     }
 }
 
