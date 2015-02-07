@@ -12,12 +12,30 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug{
+//            println('Debug mode')
+        }
+
         release {
-            minifyEnabled false
+
+            println ('***********************************************')
+            println ('Changing AdMob Ad unit ID')
+            def stringsFile = "/Users/steve/AndroidStudioProjects/OnThisDay/app/src/main/res/values/strings.xml"
+            def fromString = "ca-app-pub-3940256099942544/6300978111"
+            def toString = "ca-app-pub-7551320472621395/7984704460"
+            def updatedContent
+            updatedContent = new File(stringsFile).getText('UTF-8').replaceAll(fromString, toString)
+            new File(stringsFile).write(updatedContent, 'UTF-8')
+            println ('Done changing AdMob Unit Id in file:')
+            println (stringsFile)
+            println ('***********************************************')
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

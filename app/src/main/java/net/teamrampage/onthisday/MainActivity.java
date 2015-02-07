@@ -12,9 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 import net.teamrampage.onthisday.MainFragment;
 
 
@@ -31,10 +28,6 @@ public class MainActivity extends FragmentActivity {
                     .add(R.id.container, new MainFragment())
                     .commit();
         }
-
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
     }
 
 
