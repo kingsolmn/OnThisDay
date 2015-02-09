@@ -2,6 +2,7 @@ package net.teamrampage.onthisday;
 
 /**
  * Created by steve on 1/10/15.
+ * Copyright
  */
 
         import android.os.AsyncTask;
@@ -33,24 +34,45 @@ public class TopSongOnDay extends AsyncTask<String, Void, String>{
                     .data("day", day)
                     .data("year", year)
                     .post();
+            Log.i(TAG, "Request sent");
         } catch (IOException e) {
             Log.e(TAG, "Error getting the song of the day: " + e.getMessage());
             e.printStackTrace();
             return song;
         }
-        Element result = doc.getElementById("result");
 
-        if (result != null) {
-            Log.i(TAG, "Got the song of the day");
-            song = result.text();
+
+        Element result = null;
+        try{
+            Log.i(TAG, "Processing Song of the Day Result");
+            result = doc.getElementById("result");
+            Log.i(TAG, "Extracted result");
+        }catch(Exception e){
+            e.printStackTrace();
         }
 
+        try{
+            Log.i(TAG, "Checking result for a song");
+            if (result != null) {
+                Log.i(TAG, "Got the song of the day");
+                song = result.text();
+                Log.i(TAG, "Extracted song, ready to send back to the forground");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        Log.i(TAG, "Returning from the background");
         return song;
     }
 
     protected void onPostExecute(String result){
         Log.i(TAG, "Done, sending info back to the Main Activity");
-        MainFragment.songOnDayRes(result);
+        try {
+            net.teamrampage.onthisday.MainFragment.songOnDayRes(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

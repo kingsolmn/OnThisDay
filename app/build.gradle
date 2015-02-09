@@ -3,35 +3,42 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
         applicationId "net.teamrampage.onthisday"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.config
     }
     buildTypes {
-        debug{
-//            println('Debug mode')
-        }
-
         release {
-
-            println ('***********************************************')
-            println ('Changing AdMob Ad unit ID')
+            println('***********************************************')
+            println('Changing AdMob Ad unit ID')
             def stringsFile = "/Users/steve/AndroidStudioProjects/OnThisDay/app/src/main/res/values/strings.xml"
             def fromString = "ca-app-pub-3940256099942544/6300978111"
             def toString = "ca-app-pub-7551320472621395/7984704460"
             def updatedContent
             updatedContent = new File(stringsFile).getText('UTF-8').replaceAll(fromString, toString)
             new File(stringsFile).write(updatedContent, 'UTF-8')
-            println ('Done changing AdMob Unit Id in file:')
-            println (stringsFile)
-            println ('***********************************************')
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            println('Done changing AdMob Unit Id in file:')
+            println(stringsFile)
+            println('***********************************************')
+//            minifyEnabled false
+//            proguard-android getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            debuggable true
         }
+        debug {
+            debuggable true
+            minifyEnabled false
+            zipAlignEnabled true
+            signingConfig signingConfigs.config
+            jniDebuggable true
+            renderscriptDebuggable true
+        }
+    }
+    productFlavors {
     }
 }
 
