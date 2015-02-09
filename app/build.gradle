@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+        }
+    }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
     defaultConfig {
@@ -9,7 +13,7 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        signingConfig signingConfigs.config
+        signingConfig signingConfigs.debug
     }
     buildTypes {
         release {
@@ -26,16 +30,15 @@ android {
             println('***********************************************')
 //            minifyEnabled false
 //            proguard-android getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
             debuggable true
         }
         debug {
             debuggable true
             minifyEnabled false
             zipAlignEnabled true
-            signingConfig signingConfigs.config
             jniDebuggable true
             renderscriptDebuggable true
+            signingConfig signingConfigs.debug
         }
     }
     productFlavors {
