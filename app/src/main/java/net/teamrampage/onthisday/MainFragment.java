@@ -22,6 +22,9 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 public class MainFragment extends Fragment {
     private static final String TAG = "OnThisDay - Fragment";
@@ -46,6 +49,10 @@ public class MainFragment extends Fragment {
                                 Bundle savedInstanceState) {
         faActivity = (FragmentActivity) super.getActivity();
         lLayout = (RelativeLayout) inflater.inflate(R.layout.fragment_main, container, false);
+
+        com.google.android.gms.ads.AdView mAdView = (com.google.android.gms.ads.AdView) lLayout.findViewById(R.id.adView);
+        com.google.android.gms.ads.AdRequest adRequest = new com.google.android.gms.ads.AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         return lLayout;
     }

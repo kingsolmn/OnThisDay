@@ -1,2 +1,7 @@
 /build
+<<<<<<< HEAD
 /*.apk
+=======
+*.apk
+
+>>>>>>> feature_admob
