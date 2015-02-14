@@ -1,4 +1,4 @@
-package net.teamrampage.onthisday;
+package net.trs.onthisday;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

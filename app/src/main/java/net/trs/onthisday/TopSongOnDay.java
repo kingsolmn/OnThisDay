@@ -1,4 +1,4 @@
-package net.teamrampage.onthisday;
+package net.trs.onthisday;
 
 /**
  * Created by steve on 1/10/15.
@@ -69,7 +69,7 @@ public class TopSongOnDay extends AsyncTask<String, Void, String>{
     protected void onPostExecute(String result){
         Log.i(TAG, "Done, sending info back to the Main Activity");
         try {
-            net.teamrampage.onthisday.MainFragment.songOnDayRes(result);
+            net.trs.onthisday.MainFragment.songOnDayRes(result);
         } catch (Exception e) {
             e.printStackTrace();
         }

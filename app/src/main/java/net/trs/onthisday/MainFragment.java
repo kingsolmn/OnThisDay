@@ -1,4 +1,4 @@
-package net.teamrampage.onthisday;
+package net.trs.onthisday;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -21,9 +21,6 @@ import android.widget.RelativeLayout;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.TimeZone;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 
 public class MainFragment extends Fragment {

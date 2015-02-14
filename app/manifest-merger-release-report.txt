@@ -42,13 +42,13 @@ MERGED from com.google.android.gms:play-services:6.5.87:21:9
 		ADDED from AndroidManifest.xml:13:20
 	android:value
 		ADDED from AndroidManifest.xml:14:20
-activity#net.teamrampage.onthisday.MainFragment
+activity#net.trs.onthisday.MainFragment
 ADDED from AndroidManifest.xml:15:9
 	android:label
 		ADDED from AndroidManifest.xml:17:13
 	android:name
 		ADDED from AndroidManifest.xml:16:13
-activity#net.teamrampage.onthisday.MainActivity
+activity#net.trs.onthisday.MainActivity
 ADDED from AndroidManifest.xml:19:9
 	android:label
 		ADDED from AndroidManifest.xml:21:13
