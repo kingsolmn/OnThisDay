@@ -1,8 +1,7 @@
 package net.trs.onthisday;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.app.FragmentActivity;
 
 
 public class MainActivity extends FragmentActivity {
@@ -59,9 +58,9 @@ public class MainActivity extends FragmentActivity {
 //        }
 //    }
 
-    public static void lookUpDate(View v){
-        MainFragment.lookUpDate(v);
-    }
+//    public void lookUpDate(View v){
+//        MainFragment.lookUpDate(v);
+//    }
 //
 //    public static void songOnDayRes(String songOnDay){
 //        android.util.Log.i(TAG, "songOnDayRes");

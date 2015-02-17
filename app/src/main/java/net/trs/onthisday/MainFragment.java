@@ -15,8 +15,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import net.trs.onthisday.TrsApplication.TrackerName;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -46,6 +51,13 @@ public class MainFragment extends Fragment {
                                 Bundle savedInstanceState) {
         faActivity = (FragmentActivity) super.getActivity();
         lLayout = (RelativeLayout) inflater.inflate(R.layout.fragment_main, container, false);
+
+        Tracker t = ((TrsApplication) getActivity().getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+        t.enableAdvertisingIdCollection(true);
+
+        t.setScreenName("MainFragment");
+        t.send(new HitBuilders.AppViewBuilder().build());
 
         com.google.android.gms.ads.AdView mAdView = (com.google.android.gms.ads.AdView) lLayout.findViewById(R.id.adView);
         com.google.android.gms.ads.AdRequest adRequest = new com.google.android.gms.ads.AdRequest.Builder().build();
@@ -119,14 +131,31 @@ public class MainFragment extends Fragment {
             }
 
         });
+
+        btn.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                lookUpDate(v);
+            }
+        });
         Log.v(TAG, "onResume Done");
     }
 
-    public static void lookUpDate(View v){
+    public void lookUpDate(View v){
         Log.i(TAG, "lookUpDate");
         tv.setText("Looking up the song of the day for \n" + (new DateFormatSymbols().getMonths()[Integer.valueOf(month)]) + " " + date + ", " + year + " . . . ");
         prg.setVisibility(View.VISIBLE);
         btn.setVisibility(View.INVISIBLE);
+
+
+        Tracker t = ((TrsApplication) getActivity().getApplication()).getTracker(TrackerName.APP_TRACKER);
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory("SongOnDay")
+                .setAction("Retrieve")
+                .setLabel("Song")
+                .setValue(1)
+                .build());
+
         new TopSongOnDay().execute(
                 provider,
                 month,
