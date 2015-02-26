@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -37,7 +36,7 @@ public class MainFragment extends Fragment {
 
     private static Context context;
     private static TextView tv;
-    private static Button btn;
+//    private static Button btn;
     private static ProgressBar prg;
     private static EditText edtex;
     private static Calendar cal;
@@ -83,6 +82,7 @@ public class MainFragment extends Fragment {
                 month = String.valueOf(monthOfYear);
                 date = String.valueOf(dayOfMonth);
                 edtex.setText((new DateFormatSymbols().getMonths()[Integer.valueOf(month)]) + " " + date + ", " + year);
+                lookUpDate();
             }
         };
 
@@ -92,15 +92,23 @@ public class MainFragment extends Fragment {
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH));
+        datePicker.setButton(android.app.DatePickerDialog.BUTTON_POSITIVE, "Search", datePicker);
 
         datePicker.setCancelable(false);
         datePicker.setTitle("Select a Date");
-        datePicker.show();
+//        datePicker.show();
 
         tv = (TextView) lLayout.findViewById(R.id.song_on_day);
-        btn = (Button) lLayout.findViewById(R.id.btnSubmitDate);
+//        btn = (Button) lLayout.findViewById(R.id.btnSubmitDate);
         edtex = (EditText) lLayout.findViewById(R.id.edtxDate);
         prg = (ProgressBar) lLayout.findViewById(R.id.prgbrLookUpProgress);
+
+        edtex.setText(
+                (new DateFormatSymbols().getMonths()[cal.get(java.util.Calendar.MONTH)])
+                        + " " +
+                        cal.get(Calendar.DAY_OF_MONTH)
+                        + ", " +
+                        cal.get(Calendar.YEAR));
 
         Log.v(TAG, "Setting the EditText OnFocusChangeListener");
         edtex.setOnFocusChangeListener(new OnFocusChangeListener(){
@@ -132,20 +140,20 @@ public class MainFragment extends Fragment {
 
         });
 
-        btn.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View v) {
-                lookUpDate(v);
-            }
-        });
+//        btn.setOnClickListener(new android.view.View.OnClickListener() {
+//            @Override
+//            public void onClick(android.view.View v) {
+//                lookUpDate();
+//            }
+//        });
         Log.v(TAG, "onResume Done");
     }
 
-    public void lookUpDate(View v){
+    public void lookUpDate(){
         Log.i(TAG, "lookUpDate");
         tv.setText("Looking up the song of the day for \n" + (new DateFormatSymbols().getMonths()[Integer.valueOf(month)]) + " " + date + ", " + year + " . . . ");
         prg.setVisibility(View.VISIBLE);
-        btn.setVisibility(View.INVISIBLE);
+//        btn.setVisibility(View.INVISIBLE);
 
 
         Tracker t = ((TrsApplication) getActivity().getApplication()).getTracker(TrackerName.APP_TRACKER);
@@ -166,7 +174,7 @@ public class MainFragment extends Fragment {
     public static void songOnDayRes(String songOnDay){
         Log.i(TAG, "songOnDayRes");
         prg.setVisibility(View.INVISIBLE);
-        btn.setVisibility(View.VISIBLE);
+//        btn.setVisibility(View.VISIBLE);
         tv.setText(songOnDay);
     }
 }

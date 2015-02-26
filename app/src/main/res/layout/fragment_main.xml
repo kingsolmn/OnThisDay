@@ -35,14 +35,14 @@
         <requestFocus />
     </EditText>
 
-    <Button
-        android:id="@+id/btnSubmitDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edtxDate"
-        android:layout_centerHorizontal="true"
-        android:onClick="lookUpDate"
-        android:text="@string/look_up" />
+    <!--<Button-->
+        <!--android:id="@+id/btnSubmitDate"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/edtxDate"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:onClick="lookUpDate"-->
+        <!--android:text="@string/look_up" />-->
 
     <TextView
         android:id="@+id/textView1"

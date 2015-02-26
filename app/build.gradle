@@ -8,24 +8,26 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
     defaultConfig {
-        applicationId 'net.trs.onthisday'
+//        applicationId 'net.trs.onthisday'
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 3
-        versionName '0.7.0'
+//        versionName '0.7.0'
         signingConfig signingConfigs.debug
     }
     buildTypes {
+
+        String testAdString = "ca-app-pub-3940256099942544/6300978111"
+        String prodAdString = "ca-app-pub-7551320472621395/7984704460"
+
         release {
             println('***********************************************')
-            println('Changing AdMob Ad unit ID')
+            println('Release - Changing AdMob Ad unit ID')
             def stringsFile = "/Users/steve/AndroidStudioProjects/OnThisDay/app/src/main/res/values/strings.xml"
-            def fromString = "ca-app-pub-3940256099942544/6300978111"
-            def toString = "ca-app-pub-7551320472621395/7984704460"
             def updatedContent
-            updatedContent = new File(stringsFile).getText('UTF-8').replaceAll(fromString, toString)
+            updatedContent = new File(stringsFile).getText('UTF-8').replaceAll(testAdString, prodAdString)
             new File(stringsFile).write(updatedContent, 'UTF-8')
-            println('Done changing AdMob Unit Id in file:')
+            println('Release - Done changing AdMob Unit Id in file:')
             println(stringsFile)
             println('***********************************************')
 //            minifyEnabled false
@@ -33,6 +35,16 @@ android {
             debuggable false
         }
         debug {
+//            println('***********************************************')
+//            println('Debug - Changing AdMob Ad unit ID')
+//            def stringsFile = "/Users/steve/AndroidStudioProjects/OnThisDay/app/src/main/res/values/strings.xml"
+//            def updatedContent
+//            updatedContent = new File(stringsFile).getText('UTF-8').replaceAll(prodAdString, testAdString)
+//            new File(stringsFile).write(updatedContent, 'UTF-8')
+//            println('Debug - Done changing AdMob Unit Id in file:')
+//            println(stringsFile)
+//            println('***********************************************')
+
             debuggable true
             minifyEnabled false
             zipAlignEnabled true
@@ -42,7 +54,19 @@ android {
         }
     }
     productFlavors {
+
+        String verName = "0.7.0 - "
+
+        free {
+            applicationId "net.trs.onthisday"
+            versionName verName + "free"
+        }
+        full {
+            applicationId "net.trs.onthisday.full"
+            versionName verName + "full"
+        }
     }
+    sourceSets { full { java.srcDirs = ['src/full/java', 'src/full/java/2'] } }
 }
 
 
