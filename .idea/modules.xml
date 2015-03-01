@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OnThisDay.iml" filepath="$PROJECT_DIR$/OnThisDay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/onthisday-endpoint/onthisday-endpoint.iml" filepath="$PROJECT_DIR$/onthisday-endpoint/onthisday-endpoint.iml" />
+      <module fileurl="file://$PROJECT_DIR$/onthisday_backend/onthisday_backend.iml" filepath="$PROJECT_DIR$/onthisday_backend/onthisday_backend.iml" />
     </modules>
   </component>
 </project>
