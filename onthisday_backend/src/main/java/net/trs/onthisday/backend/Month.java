@@ -330,5 +330,46 @@ public enum Month {
                 throw new Exception("Invalid Month Supplied");
         }
     }
+
+    @Override
+    public String toString(){
+        switch(this) {
+            case JANUARY:
+                return "January";
+            case FEBRUARY:
+                return "February";
+            case MARCH:
+                return "March";
+            case APRIL:
+                return "April";
+            case MAY:
+                return "May";
+            case JUNE:
+                return "June";
+            case JULY:
+                return "July";
+            case AUGUST:
+                return "August";
+            case SEPTEMBER:
+                return "September";
+            case OCTOBER:
+                return "October";
+            case NOVEMBER:
+                return "November";
+            case DECEMBER:
+                return "December";
+            default:
+                return null;
+        }
+    }
+
+    public static boolean isLeapYear(int year){
+        assert year >=1583;
+        return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 ==0);
+    }
+
+    public boolean compare(Month month){
+        return this == month;
+    }
 }
 

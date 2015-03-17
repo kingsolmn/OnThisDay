@@ -6,7 +6,13 @@
 
 package net.trs.onthisday.backend;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +33,8 @@ public class MyServlet extends HttpServlet {
             throws IOException {
         resp.setContentType("text/plain");
 
-        org.jsoup.select.Elements results;
-        net.trs.onthisday.backend.Month month = JANUARY;
+//        Elements results;
+        Month month = JANUARY;
 
         try {
             month = Month.getMonth(req.getParameter("month"));
@@ -44,71 +50,48 @@ public class MyServlet extends HttpServlet {
 
         String url = "http://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_";
 //        String url   = "http://www.gamquistu.com/stuff/charts/result";//params[0]; //SoD Service URI
-        String song  = "Opps! No song info found for that date.";
+//        String song  = "Opps! No song info found for that date.";
 
         resp.getWriter().println("Date: " + month + " " + targetDay + " " + year);
-        resp.getWriter().println("Source: " + url + year);
+//        resp.getWriter().println("Source: " + url + year);
 
-        results = getPage(url + year);
-
-        getTargetCell(getPage(url + year), month.toString(), Integer.valueOf(targetDay));
-
-        for(org.jsoup.nodes.Element td : results){
-            if(td.text().toLowerCase().matches("^" + month.toString() + "\\s+\\d+")){
-                String date = td.text().split(" ")[1];
-                resp.getWriter().println("Target Date: " + month.toString() + " " + targetDay);
-                resp.getWriter().println("Matched: " + td.text());
-
-                int targetDate = Integer.valueOf(targetDay);
-                int curDate   = Integer.valueOf(date);
-
-                int dateDiff = targetDate - curDate;
-                resp.getWriter().println("dateDiff: " + dateDiff);
-
-                if(dateDiff < 0 && dateDiff > -7){
-                    // Over shot by lees than a week
-                    resp.getWriter().println("Overshot by less than a week");
-                    if(month.toString().toLowerCase().contains("january")){
-                        resp.getWriter().println("Need to go back to last year");
-                    }else{
-                        resp.getWriter().println("Need to go back to last month");
-                    }
-                }else if(dateDiff == 0){
-                    // on the nose
-                    resp.getWriter().println("On the nose");
-                }else if(dateDiff > 0 && dateDiff < 7){
-                    // undershot by less than a week
-                    resp.getWriter().println("Undershot by less than a week");
-                }else{
-                    // more than a week off
-                    resp.getWriter().println("More than a week off");
-                }
-
-                String songName = getSongName(td.nextElementSibling());
-                String songArtist = getSongArtist(td.nextElementSibling().nextElementSibling());
-
-                resp.getWriter().println(" ---- ");
-//                resp.getWriter().println("This sibling: " + songNameTD);
-//                resp.getWriter().println("Next Sibling: " + songArtistTD);
-//                resp.getWriter().println("songName: " + songName);
-//                resp.getWriter().println("songArtist: " + songArtist);
-                resp.getWriter().println("Song Name: " + songName + "\nSong Artist: " + songArtist);
-                resp.getWriter().println(" ---- ");
-                resp.getWriter().println("\n");
-            }
+        Element target = null;
+        try {
+            target = getTargetCell(getPage(url + year), month, Integer.valueOf(targetDay), Integer.valueOf(year));
+        } catch (NullPointerException e) {
+            resp.getWriter().println("Target Cell Exception: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            resp.getWriter().println("Target Cell Exception: " + e.getMessage());
         }
 
-        resp.getWriter().println(song);
+        String songName = "N/A";
+        try {
+            songName = getSongName(target);
+        } catch (NullPointerException e) {
+            songName = e.getMessage();
+        }
+        String songArtist = "N/A";
+        try {
+            songArtist = getSongArtist(target);
+        } catch (Exception e) {
+            songArtist = e.getMessage();
+        }
+
+        resp.getWriter().println("Song: " + songName);
+        resp.getWriter().println("Artist: " + songArtist);
     }
 
     /*
      *
      */
-    private String getSongName(org.jsoup.nodes.Element songNameTD){
+    private String getSongName(Element songNameTD) throws NullPointerException{
         String sn = "N/A";
 
         if(songNameTD.nextElementSibling() != null){
             sn = songNameTD.text();
+        }else{
+            Element previousSibling = songNameTD.parent().previousElementSibling().child(1);
+            return getSongName(previousSibling);
         }
 
         return sn;
@@ -117,11 +100,14 @@ public class MyServlet extends HttpServlet {
     /*
      *
      */
-    private String getSongArtist(org.jsoup.nodes.Element songArtistTD){
+    private String getSongArtist(Element songArtistTD) throws NullPointerException{
         String sa = "N/A";
 
-        if(songArtistTD != null){
-            sa = songArtistTD.text();
+        if(songArtistTD.nextElementSibling() != null){
+            sa = songArtistTD.nextElementSibling().text();
+        }else{
+            Element previousSibling = songArtistTD.parent().previousElementSibling().child(1);
+            return getSongArtist(previousSibling);
         }
 
         return sa;
@@ -131,21 +117,21 @@ public class MyServlet extends HttpServlet {
      *
      * Retrieves specified page for processing.
      * @param url The URL of the page to retrieve.
-     * @return The XML <code>td</code> elements of the page for processing
+     * @return The XML <code>table</code> elements of the page for processing
      */
-    private org.jsoup.select.Elements getPage(String url) {
-        org.jsoup.nodes.Document doc = null;
-        org.jsoup.select.Elements res = null;
+    private Elements getPage(String url) {
+        Document doc = null;
+        Elements res = null;
         try {
-            doc = org.jsoup.Jsoup.connect(url).userAgent("Mozilla").get();
+            doc = Jsoup.connect(url).userAgent("Mozilla").get();
         } catch (java.io.IOException e) {
-            // TODO Need to complete error reporting/handling
+            // TODO Need to complete error handling
         }
 
         try{
-            res = doc.getElementsByTag("td");
+            res = doc.select("table");
         }catch(Exception e2){
-            // TODO Need to complete error reporting/handling
+            // TODO Need to complete error handling
         }
         return res;
     }
@@ -153,23 +139,60 @@ public class MyServlet extends HttpServlet {
     /*
      *
      */
-    private org.jsoup.select.Elements getTargetCell(org.jsoup.select.Elements td, String targetMonth, int targetDate){
+    private Element getTargetCell(Elements in, Month targetMonth, int targetDate, int year) throws NullPointerException{
 
-        for(org.jsoup.nodes.Element target : td){
-            if(target.text().toLowerCase().matches("^" + targetMonth + "\\s+\\d")){
-                int curDate = Integer.valueOf(td.text().split(" ")[1]);
+        Element table = in.get(1);
+        Iterator<Element> tr = table.select("tr").iterator();
+
+        return findTarget(tr, targetMonth, targetDate, year);
+    }
+
+    private Element findTarget(Iterator<Element> tr, Month targetMonth, int targetDate, int year){
+
+        Month curMonth;
+        Element curRow;
+
+        while(tr.hasNext()){
+            curRow = tr.next();
+            Elements td;
+            td = curRow.select("td");
+
+            if(td.size() > 0){
+                try {
+                    curMonth = Month.getMonth(td.get(0).text().split(" ")[0].toLowerCase());
+                } catch (Exception e) {
+                    // Not a month row
+                    continue;
+                }
+            }else{
+                continue;
+            }
+
+//            if(seekToMonth(targetMonth, targetDate, year, curRow)){
+//                return td.get(1);
+//            }else{
+//                continue;
+//            }
+
+            if(curMonth == targetMonth){
+                int curDate = Integer.valueOf(curRow.text().split(" ")[1]);
                 int dateDiff = targetDate - curDate;
 
-
-
                 if(dateDiff <= 0 && dateDiff >= -7){
-                    // Where we need to be
-                }else if(dateDiff > 0 && dateDiff < 7){
-                    // Need to go back a week
+                    return td.get(1);
+                }else if((curMonth.length(Month.isLeapYear(year)) >= targetDate)) {
+
+                }else{
+                    continue;
                 }
+            }else{
+                continue;
             }
         }
-
         return null;
+    }
+
+    private boolean seekToMonth(Month targetMonth, int targetDate, int year, Element curRow){
+
     }
 }
