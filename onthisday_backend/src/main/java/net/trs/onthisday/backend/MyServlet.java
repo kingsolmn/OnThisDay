@@ -150,12 +150,9 @@ public class MyServlet extends HttpServlet {
     private Element findTarget(Iterator<Element> tr, Month targetMonth, int targetDate, int year){
 
         Month curMonth;
-        Element curRow;
 
         while(tr.hasNext()){
-            curRow = tr.next();
-            Elements td;
-            td = curRow.select("td");
+            Elements td = tr.next().select("td");
 
             if(td.size() > 0){
                 try {
@@ -168,20 +165,14 @@ public class MyServlet extends HttpServlet {
                 continue;
             }
 
-//            if(seekToMonth(targetMonth, targetDate, year, curRow)){
-//                return td.get(1);
-//            }else{
-//                continue;
-//            }
-
             if(curMonth == targetMonth){
-                int curDate = Integer.valueOf(curRow.text().split(" ")[1]);
+                int curDate = Integer.valueOf(td.text().split(" ")[1]);
                 int dateDiff = targetDate - curDate;
 
                 if(dateDiff <= 0 && dateDiff >= -7){
                     return td.get(1);
-                }else if((curMonth.length(Month.isLeapYear(year)) >= targetDate)) {
-
+                }else if((curMonth.length(Month.isLeapYear(year)) >= targetDate) && dateDiff <= 7) {
+                    return td.get(1);
                 }else{
                     continue;
                 }
@@ -192,7 +183,7 @@ public class MyServlet extends HttpServlet {
         return null;
     }
 
-    private boolean seekToMonth(Month targetMonth, int targetDate, int year, Element curRow){
-
-    }
+//    private boolean seekToMonth(Month targetMonth, int targetDate, int year, Element curRow){
+//
+//    }
 }
