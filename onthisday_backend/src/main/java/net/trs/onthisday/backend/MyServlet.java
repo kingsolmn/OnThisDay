@@ -32,8 +32,6 @@ public class MyServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         resp.setContentType("text/plain");
-
-//        Elements results;
         Month month = JANUARY;
 
         try {
@@ -49,11 +47,8 @@ public class MyServlet extends HttpServlet {
         }
 
         String url = "http://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_";
-//        String url   = "http://www.gamquistu.com/stuff/charts/result";//params[0]; //SoD Service URI
-//        String song  = "Opps! No song info found for that date.";
 
-        resp.getWriter().println("Date: " + month + " " + targetDay + " " + year);
-//        resp.getWriter().println("Source: " + url + year);
+        resp.getWriter().println("Results for date: " + month + " " + targetDay + " " + year);
 
         Element target = null;
         try {
@@ -182,8 +177,4 @@ public class MyServlet extends HttpServlet {
         }
         return null;
     }
-
-//    private boolean seekToMonth(Month targetMonth, int targetDate, int year, Element curRow){
-//
-//    }
 }
