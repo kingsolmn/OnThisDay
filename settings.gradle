@@ -1,1 +1,1 @@
-include ':app', ':onthisday_backend'
+include ':app', ':onthisday_backend', ':SoD_API'

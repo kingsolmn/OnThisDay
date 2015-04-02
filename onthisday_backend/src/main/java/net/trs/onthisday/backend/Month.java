@@ -300,7 +300,7 @@ public enum Month {
      * @throws Exception if the {@code String} month value is anything other than a
      * properly spelled month name in the Gregorian calendar
      */
-    protected static Month getMonth(String targetMonth) throws Exception {
+    public static Month getMonth(String targetMonth) throws Exception {
         switch(targetMonth.toLowerCase()){
             case "january":
                 return JANUARY;
