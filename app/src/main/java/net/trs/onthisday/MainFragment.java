@@ -78,6 +78,7 @@ public class MainFragment extends Fragment {
         dtPickListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int selectedYear, int monthOfYear, int dayOfMonth) {
+                // TODO Use a global cal object instead of Strings for the selected date, maybe?
                 Log.v(TAG, "onDateSet");
                 year = String.valueOf(selectedYear);
                 month = String.valueOf(monthOfYear);
