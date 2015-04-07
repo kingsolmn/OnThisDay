@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/qxo22KO_NajwgGfpFY9QwHXxCaA\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/CmRklXNCpEodjvPQVnDYgy8XDQ4\"",
  "discoveryVersion": "v1",
  "id": "soDApi:v1",
  "name": "soDApi",
@@ -13,8 +13,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://avian-science-88721.appspot.com/_ah/api/",
- "rpcUrl": "https://avian-science-88721.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://nimble-unison-90718.appspot.com/_ah/api/",
+ "rpcUrl": "https://nimble-unison-90718.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {

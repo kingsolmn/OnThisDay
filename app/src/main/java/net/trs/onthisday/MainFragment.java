@@ -82,7 +82,10 @@ public class MainFragment extends Fragment {
                 year = String.valueOf(selectedYear);
                 month = String.valueOf(monthOfYear);
                 date = String.valueOf(dayOfMonth);
-                edtex.setText((new DateFormatSymbols().getMonths()[Integer.valueOf(month)]) + " " + date + ", " + year);
+                edtex.setText(
+                        (new DateFormatSymbols().getMonths()[Integer.valueOf(month)]) + " " +
+
+                                date + ", " + year);
             }
         };
 
@@ -156,17 +159,22 @@ public class MainFragment extends Fragment {
                 .setValue(1)
                 .build());
 
-        new TopSongOnDay().execute(
-                provider,
+//        new TopSongOnDay().execute(
+//                provider,
+//                month,
+//                date,
+//                year);
+        new net.trs.onthisday.SoDAsyncTask().execute(
+                this.getActivity(),
                 month,
                 date,
                 year);
     }
 
-    public static void songOnDayRes(String songOnDay){
+    public static void songOnDayRes(String[] songOnDay){
         Log.i(TAG, "songOnDayRes");
         prg.setVisibility(View.INVISIBLE);
         btn.setVisibility(View.VISIBLE);
-        tv.setText(songOnDay);
+        tv.setText(songOnDay[0] + songOnDay[1]);
     }
 }

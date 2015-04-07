@@ -17,6 +17,7 @@ import java.io.IOException;
 public class TopSongOnDay extends AsyncTask<String, Void, String>{
 
     private static final String TAG = "SongOfTheDayBGThread";
+    String[] song  = {"Opps! No info Found for that date.", ""};
 
     public String doInBackground(String... params){
         Log.v(TAG, "Preparing to send for the song of the day");
@@ -24,7 +25,6 @@ public class TopSongOnDay extends AsyncTask<String, Void, String>{
         String month = params[1]; //Month
         String day   = params[2]; //Date
         String year  = params[3]; //Year
-        String song  = "Opps! No info Found for that date.";
 
         Document doc;
         try {
@@ -38,7 +38,7 @@ public class TopSongOnDay extends AsyncTask<String, Void, String>{
         } catch (IOException e) {
             Log.e(TAG, "Error getting the song of the day: " + e.getMessage());
             e.printStackTrace();
-            return song;
+            return song[0];
         }
 
 
@@ -55,7 +55,7 @@ public class TopSongOnDay extends AsyncTask<String, Void, String>{
             Log.i(TAG, "Checking result for a song");
             if (result != null) {
                 Log.i(TAG, "Got the song of the day");
-                song = result.text();
+                song[0] = result.text();
                 Log.i(TAG, "Extracted song, ready to send back to the forground");
             }
         }catch(Exception e){
@@ -63,13 +63,13 @@ public class TopSongOnDay extends AsyncTask<String, Void, String>{
         }
 
         Log.i(TAG, "Returning from the background");
-        return song;
+        return song[0];
     }
 
     protected void onPostExecute(String result){
         Log.i(TAG, "Done, sending info back to the Main Activity");
         try {
-            net.trs.onthisday.MainFragment.songOnDayRes(result);
+            net.trs.onthisday.MainFragment.songOnDayRes(song);
         } catch (Exception e) {
             e.printStackTrace();
         }

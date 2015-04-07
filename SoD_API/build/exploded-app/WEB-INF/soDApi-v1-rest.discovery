@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/qxo22KO_NajwgGfpFY9QwHXxCaA\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/CmRklXNCpEodjvPQVnDYgy8XDQ4\"",
  "discoveryVersion": "v1",
  "id": "soDApi:v1",
  "name": "soDApi",
@@ -13,9 +13,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://avian-science-88721.appspot.com/_ah/api/soDApi/v1/sod/",
+ "baseUrl": "https://nimble-unison-90718.appspot.com/_ah/api/soDApi/v1/sod/",
  "basePath": "/_ah/api/soDApi/v1/sod/",
- "rootUrl": "https://avian-science-88721.appspot.com/_ah/api/",
+ "rootUrl": "https://nimble-unison-90718.appspot.com/_ah/api/",
  "servicePath": "soDApi/v1/sod/",
  "batchPath": "batch",
  "parameters": {

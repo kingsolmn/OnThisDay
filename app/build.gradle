@@ -53,4 +53,5 @@ dependencies {
     compile 'org.jsoup:jsoup:1.+'
     compile 'com.google.android.gms:play-services:6.5.87'
     compile project(path: ':SoD_API', configuration: 'android-endpoints')
+    compile project(':onthisday_backend')
 }

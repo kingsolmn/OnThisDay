@@ -32,7 +32,7 @@ public class SoDEndpoint {
     /**
      * This method gets the <code>SoD</code> object for the date given.
      *
-     * @param month The <code>Month</code> of the date.
+     * @param monthIn The <code>Month</code> of the date.
      * @param targetDay The date of the date.
      * @param year The year of the date.
      *
@@ -40,7 +40,6 @@ public class SoDEndpoint {
      */
     @ApiMethod(name = "getSoD")
     public SoD getSoD(@Named("month") String monthIn, @Named("targetDay") String targetDay, @Named("year") String year) {
-        // TODO: Implement this function
         logger.info("Calling getSoD method");
         HashMap<String, String> results = new HashMap<>();
         SoD sod = new SoD();
@@ -63,17 +62,4 @@ public class SoDEndpoint {
 
         return sod;
     }
-//
-//    /**
-//     * This inserts a new <code>SoD</code> object.
-//     *
-//     * @param soD The object to be added.
-//     * @return The object to be added.
-//     */
-//    @ApiMethod(name = "insertSoD")
-//    public SoD insertSoD(SoD soD) {
-//        // TODO: Implement this function
-//        logger.info("Calling insertSoD method");
-//        return soD;
-//    }
 }

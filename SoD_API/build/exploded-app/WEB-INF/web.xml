@@ -5,8 +5,7 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>net.trs.onthisday.backend.endpointapi.MyEndpoint,
-                net.trs.onthisday.backend.endpointapi.SoDEndpoint</param-value>
+            <param-value>net.trs.onthisday.backend.endpointapi.SoDEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
