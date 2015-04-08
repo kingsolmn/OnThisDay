@@ -11,8 +11,8 @@ android {
         applicationId 'net.trs.onthisday'
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 3
-        versionName '0.7.0'
+        versionCode 4
+        versionName '0.7.1'
         signingConfig signingConfigs.debug
     }
     buildTypes {
@@ -20,10 +20,10 @@ android {
             println('***********************************************')
             println('Changing AdMob Ad unit ID')
             def stringsFile = "/Users/steve/AndroidStudioProjects/OnThisDay/app/src/main/res/values/strings.xml"
-            def fromString = "ca-app-pub-3940256099942544/6300978111"
-            def toString = "ca-app-pub-7551320472621395/7984704460"
-            def updatedContent
-            updatedContent = new File(stringsFile).getText('UTF-8').replaceAll(fromString, toString)
+            def sourceFile = "/Users/steve/Documents/Dev_Stuff/Android_Res/onthisday/admob.prod"
+            def toString = new File(sourceFile).getText('UTF-8');
+            def fromString = "admob-prod"
+            def updatedContent = new File(stringsFile).getText('UTF-8').replaceAll(fromString, toString)
             new File(stringsFile).write(updatedContent, 'UTF-8')
             println('Done changing AdMob Unit Id in file:')
             println(stringsFile)

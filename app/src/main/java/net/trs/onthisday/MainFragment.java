@@ -23,17 +23,16 @@ import com.google.android.gms.analytics.Tracker;
 
 import net.trs.onthisday.TrsApplication.TrackerName;
 
-import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 
 public class MainFragment extends Fragment {
     private static final String TAG = "OnThisDay - Fragment";
-    private static String provider;
-    private static String month;
-    private static String date;
-    private static String year;
+//    private static String provider;
+//    private static String month;
+//    private static String date;
+//    private static String year;
 
     private static Context context;
     private static TextView tv;
@@ -71,7 +70,6 @@ public class MainFragment extends Fragment {
         super.onResume();
         Log.i(TAG, "onResume");
         context = super.getActivity();
-        provider = "http://www.gamquistu.com/stuff/charts/result";
 
         cal = Calendar.getInstance(TimeZone.getDefault());
 
@@ -80,13 +78,13 @@ public class MainFragment extends Fragment {
             public void onDateSet(DatePicker view, int selectedYear, int monthOfYear, int dayOfMonth) {
                 // TODO Use a global cal object instead of Strings for the selected date, maybe?
                 Log.v(TAG, "onDateSet");
-                year = String.valueOf(selectedYear);
-                month = String.valueOf(monthOfYear);
-                date = String.valueOf(dayOfMonth);
+                cal.set(java.util.Calendar.YEAR, selectedYear);
+                cal.set(Calendar.MONTH,monthOfYear);
+                cal.set(java.util.Calendar.DAY_OF_MONTH, dayOfMonth);
                 edtex.setText(
-                        (new DateFormatSymbols().getMonths()[Integer.valueOf(month)]) + " " +
-
-                                date + ", " + year);
+                        cal.getDisplayName(java.util.Calendar.MONTH, Calendar.LONG, java.util.Locale.US) + " " +
+                        cal.get(java.util.Calendar.DAY_OF_MONTH) + ", " +
+                        cal.get(java.util.Calendar.YEAR));
             }
         };
 
@@ -147,7 +145,10 @@ public class MainFragment extends Fragment {
 
     public void lookUpDate(View v){
         Log.i(TAG, "lookUpDate");
-        tv.setText("Looking up the song of the day for \n" + (new DateFormatSymbols().getMonths()[Integer.valueOf(month)]) + " " + date + ", " + year + " . . . ");
+        tv.setText("Looking up the song of the day for \n" +
+                cal.getDisplayName(java.util.Calendar.MONTH, Calendar.LONG, java.util.Locale.US) + " " +
+                cal.get(java.util.Calendar.DAY_OF_MONTH) + ", " +
+                cal.get(java.util.Calendar.YEAR) + " . . . ");
         prg.setVisibility(View.VISIBLE);
         btn.setVisibility(View.INVISIBLE);
 
@@ -160,16 +161,11 @@ public class MainFragment extends Fragment {
                 .setValue(1)
                 .build());
 
-//        new TopSongOnDay().execute(
-//                provider,
-//                month,
-//                date,
-//                year);
         new net.trs.onthisday.SoDAsyncTask().execute(
                 this.getActivity(),
-                month,
-                date,
-                year);
+                cal.get(java.util.Calendar.MONTH),
+                Integer.toString(cal.get(java.util.Calendar.DAY_OF_MONTH)),
+                Integer.toString(cal.get(java.util.Calendar.YEAR)));
     }
 
     public static void songOnDayRes(String[] songOnDay){
